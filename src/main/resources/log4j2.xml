@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="on" monitorInterval="18000">
+	<!-- monitorInterval : time-span to check this configuration and recofig. -->
+
+	<properties>
+		<property name="LOG_HOME">data</property>
+		<property name="LOG_FILE_NAME">hyper-telepathia</property>
+		<property name="SINGLE_LOG_FILE_NAME">hyper-telepathia-single</property>
+	</properties>
+
+	<Appenders>
+		<Console name="Console" target="SYSTEM_OUT">
+			<!-- <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} 
+				- %msg%n" /> -->
+			<PatternLayout pattern="%msg%n" />
+		</Console>
+
+		<File name="SingleFileLog" fileName="${LOG_HOME}/${SINGLE_LOG_FILE_NAME}.log"
+			append="false">
+			<PatternLayout
+				pattern="%d{HH:mm:ss.SSS} %-5level %class{36} %L %M - %msg%xEx%n" />
+			<!-- <PatternLayout pattern="%msg%n" /> -->
+		</File>
+	</Appenders>
+
+	<Loggers>
+		<!-- 3rdparty Loggers -->
+		<logger name="org.springframework.core" level="INFO">
+		</logger>
+		<logger name="org.springframework.beans" level="INFO">
+		</logger>
+		<logger name="org.springframework.context" level="INFO">
+		</logger>
+		<logger name="org.springframework.web" level="INFO"></logger>
+		<logger name="org.jeasy.rules.core" level="WARN"></logger>
+		<logger name="com.srt.missouri.data.platform.clinical.summary" level="error">
+		</logger>
+		<logger name="org.apache.storm.logging.ThriftAccessLogger"
+			level="WARN">
+		</logger>
+
+		<root level="INFO">
+			<appender-ref ref="Console" />
+		</root>
+	</Loggers>
+</Configuration>
