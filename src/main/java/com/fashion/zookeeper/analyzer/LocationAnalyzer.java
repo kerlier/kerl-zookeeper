@@ -11,7 +11,7 @@ public class LocationAnalyzer extends ZkComponent {
 	@Path(value = "/locationHost")
 	private String locationHost;
 	
-	@Path(value = "/location")
+	@Path(value = "/locationPort")
 	private String locationPort;
 
 	public LocationAnalyzer() throws IOException {
