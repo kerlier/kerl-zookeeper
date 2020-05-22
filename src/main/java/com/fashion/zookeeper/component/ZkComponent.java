@@ -10,6 +10,7 @@ import org.apache.zookeeper.Watcher.Event.EventType;
 import org.apache.zookeeper.ZooKeeper;
 import org.apache.zookeeper.data.Stat;
 
+import com.fashion.zookeeper.annotation.Path;
 import com.fashion.zookeeper.util.ReflectUtil;
 
 public abstract class ZkComponent implements IComponent {
@@ -55,11 +56,14 @@ public abstract class ZkComponent implements IComponent {
 		Class<? extends ZkComponent> class1 = this.getClass();
 		try {
 			Field[] declaredFields = class1.getDeclaredFields();
-			for (Field field : declaredFields) {
-				String value = new String(zooKeeper.getData("/" + field.getName(), true, stat),
-						Charset.forName("utf-8"));
-				ReflectUtil.setValue(this, class1, field.getName(),
-						this.getClass().getDeclaredField(field.getName()).getType(), value);
+			for (Field field: declaredFields) {
+				if(field.isAnnotationPresent(Path.class)) {
+					Path annotation = field.getAnnotation(Path.class);
+					String value = new String(zooKeeper.getData(annotation.value(), true, stat),
+							Charset.forName("utf-8"));
+					ReflectUtil.setValue(this, class1, field.getName(),
+							this.getClass().getDeclaredField(field.getName()).getType(), value);
+				}
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

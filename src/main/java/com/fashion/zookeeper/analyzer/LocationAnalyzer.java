@@ -2,12 +2,16 @@ package com.fashion.zookeeper.analyzer;
 
 import java.io.IOException;
 
+import com.fashion.zookeeper.annotation.Path;
 import com.fashion.zookeeper.component.ZkComponent;
 
 public class LocationAnalyzer extends ZkComponent {
 
+	
+	@Path(value = "/locationHost")
 	private String locationHost;
-
+	
+	@Path(value = "/location")
 	private String locationPort;
 
 	public LocationAnalyzer() throws IOException {
