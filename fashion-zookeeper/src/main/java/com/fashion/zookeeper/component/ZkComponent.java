@@ -18,8 +18,8 @@ public abstract class ZkComponent implements IComponent {
 	private ZooKeeper zooKeeper;
 
 	public ZkComponent() throws IOException {
+		//watcher只是一次性的，所以需要再次reload
 		zooKeeper = new ZooKeeper("localhost:2181", 100, new Watcher() {
-			@Override
 			public void process(WatchedEvent event) {
 				if (EventType.NodeDataChanged == event.getType()) {
 					System.out.println("success change znode: " + event.getPath());
@@ -31,12 +31,12 @@ public abstract class ZkComponent implements IComponent {
 				}
 			}
 		});
+		//初始化的时候调用，进行初始化值
 		reload();
 	}
 
 	public ZkComponent(String zkHosts) throws IOException {
 		zooKeeper = new ZooKeeper(zkHosts, 100, new Watcher() {
-			@Override
 			public void process(WatchedEvent event) {
 				if (EventType.NodeDataChanged == event.getType()) {
 					System.out.println("success change znode: " + event.getPath());
@@ -48,9 +48,13 @@ public abstract class ZkComponent implements IComponent {
 				}
 			}
 		});
+		//初始化的时候调用，进行初始化值
 		reload();
 	}
 
+	/**
+	 * zookeeper getData:再次reload. getData(path,true)表示开启watch
+	 */
 	public void reload() {
 		Stat stat = new Stat();
 		Class<? extends ZkComponent> class1 = this.getClass();

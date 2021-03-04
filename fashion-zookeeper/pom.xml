@@ -3,7 +3,13 @@
   <groupId>com.fashion.zookeeper</groupId>
   <artifactId>fashion-zookeeper</artifactId>
   <version>0.0.1-SNAPSHOT</version>
-  
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<maven.compiler.encoding>UTF-8</maven.compiler.encoding>
+		<maven.compiler.source>1.8</maven.compiler.source>
+		<maven.compiler.target>1.8</maven.compiler.target>
+	</properties>
   <dependencies>
 		<dependency>
 			<groupId>org.apache.zookeeper</groupId>
